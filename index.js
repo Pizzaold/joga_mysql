@@ -32,6 +32,16 @@ con.connect(function(err) {
     console.log("Connected to joga_mysql db!");
 })
 
+app.get('/', (req, res) => {
+    let query = "SELECT * FROM article";
+    let article = [];
+    con.query(query, (err, result) => {
+        if (err) throw err;
+        articles = result;
+        res.render('index', { article: article });
+    })
+});
+
 app.listen(3000, () => {
     console.log('Server is running at port 3000');
 });
