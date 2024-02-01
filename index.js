@@ -1,7 +1,17 @@
 const express = require('express');
-const app = express();
+const bodyParser = require('body-parser');
 
-const path = require('path');
+const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+const articleControllerClass = require('./controllers/article');
+const articleController = new articleControllerClass();
+
+const articleRouter = require('./routes/articles');
+app.use('/articles', articleRouter);
+
+/* const path = require('path');
 
 const hbs = require('express-handlebars');
 
@@ -16,9 +26,6 @@ app.engine('hbs', hbs.engine({
 app.use(express.static('public'));
 
 const mysql = require('mysql');
-
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
 
 var con = mysql.createConnection({
     host: "localhost",
@@ -50,7 +57,7 @@ app.get('/article/:slug', (req, res) => {
         article = result;
         res.render('article', { article: article });
     })
-});
+}); */
 
 app.listen(3000, () => {
     console.log('Server is running at port 3000');
