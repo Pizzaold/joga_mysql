@@ -25,40 +25,15 @@ app.engine('hbs', hbs.engine({
 
 app.use(express.static('public'));
 
-const mysql = require('mysql');
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
 
-var con = mysql.createConnection({
-    host: "localhost",
-    user: "jurmo",
-    password: "password",
-    database: "joga_mysql"
-})
+const articleRouter = require('./routes/article');
 
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected to joga_mysql db!");
-})
+app.use('/', articleRouter);
+app.use('/article', articleRouter);
+app.use('/author', articleRouter);
 
-app.get('/', (req, res) => {
-    let query = "SELECT * FROM article";
-    let article = [];
-    con.query(query, (err, result) => {
-        if (err) throw err;
-        articles = result;
-        res.render('index', { article: article });
-    })
-});
-
-app.get('/article/:slug', (req, res) => {
-    let query = `SELECT * FROM article WHERE slug = "${req.params.slug}"`;
-    let article;
-    con.query(query, (err, result) => {
-        if (err) throw err;
-        article = result;
-        res.render('article', { article: article });
-    })
-}); */
-
-app.listen(3000, () => {
-    console.log('Server is running at port 3000');
+app.listen(3004, () => {
+    console.log('Server is running at port 3004');
 });
