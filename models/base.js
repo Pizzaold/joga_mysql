@@ -46,6 +46,12 @@ class BaseSQLModel {
         const result = await this.executeQuery(query, [id]);
         return result.affectedRows;
       }
+
+      async findOne(where, value) {
+        const query = `SELECT * FROM ${this.tableName} WHERE ${where} = "${value}"`;
+        const result = await this.executeQuery(query, [where, value]);
+        return result[0];
+    }
 }
 
 module.exports = BaseSQLModel;
