@@ -31,6 +31,11 @@ class articleController {
             article: {id: articleId, ...newArticle} 
         })
     }
+
+    async updateArticle(req, res) {
+        const article = await articleModel.update(req.params.id, req.body);
+        res.render(201).json({ article: article })
+    }
 }
 
 module.exports = articleController;
