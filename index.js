@@ -33,7 +33,8 @@ const articleRouter = require('./routes/article');
 app.use('/', articleRouter);
 app.use('/article', articleRouter);
 app.use('/author', articleRouter);
+ */
 
 app.listen(3004, () => {
     console.log('Server is running at port 3004');
-});
+})
