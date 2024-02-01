@@ -52,6 +52,12 @@ class BaseSQLModel {
         const result = await this.executeQuery(query, [where, value]);
         return result[0];
     }
+
+    async findMany(where, value) {
+        const query = `SELECT * FROM ${this.tableName} WHERE ${where} = "${value}"`;
+        const result = await this.executeQuery(query, [where, value]);
+        return result;
+    }
 }
 
 module.exports = BaseSQLModel;
